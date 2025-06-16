@@ -30,12 +30,11 @@ function logout() {
 </script>
 
 <style>
-body {
+/* body {
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   margin: 0;
-  padding: 0;
-}
+} */
 .app {
   display: flex;
   min-height: 100vh;
@@ -74,6 +73,7 @@ body {
 
 .sidebar a {
   color: #bdc3c7;
+  color: white;
   text-decoration: none;
   font-weight: 500;
   display: block;
@@ -88,8 +88,10 @@ body {
 }
 
 .router-link-active {
-  background-color: #1abc9c;
+  background-color: var(--primary-color);
+  /* background-color: #1abc9c; */
   color: white;
+  /* font-weight: bold; */
   font-weight: 600;
 }
 

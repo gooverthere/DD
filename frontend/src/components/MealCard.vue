@@ -4,7 +4,7 @@
     <p class="meal-calories">{{ meal.calories ?? 'brak kcal' }} kcal</p>
     <p class="meal-description" v-if="meal.description">{{ meal.description }}</p>
     <p class="meal-ingredients">
-      <strong>Składniki:</strong>
+      <strong>Składniki: </strong>
       <span v-if="meal.ingredients.length">
         {{ meal.ingredients.map(i => i.name).join(', ') }}
       </span>
