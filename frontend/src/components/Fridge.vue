@@ -1,12 +1,12 @@
 <template>
-  <div class="fridge-container">
+  <div class="fridge-container container">
     <h2>Lodówka</h2>
 
     <h3>Co masz w lodówce?</h3>
     <ul class="fridge-list">
-      <li v-for="ingredient in fridgeIngredients" :key="ingredient.id" class="fridge-item">
+      <li v-for="ingredient in fridgeIngredients" :key="ingredient.id" class="fridge-item card">
         <span>{{ ingredient.name }}</span>
-        <button class="remove-btn" @click="removeFromFridge(ingredient.id)" aria-label="Usuń składnik">
+        <button class="remove-btn btn-danger" @click="removeFromFridge(ingredient.id)" aria-label="Usuń składnik">
           &times;
         </button>
       </li>
@@ -15,7 +15,7 @@
 
     <h3>Dodaj składniki do lodówki</h3>
     <div class="add-ingredient">
-      <select v-model="selectedIngredient" class="ingredient-select">
+      <select v-model="selectedIngredient" class="ingredient-select input">
         <option disabled value="">Wybierz składnik</option>
         <option
           v-for="ingredient in filteredAvailableIngredients"
@@ -25,7 +25,7 @@
           {{ ingredient.name }}
         </option>
       </select>
-      <button class="add-btn" @click="addToFridge" :disabled="!selectedIngredient">Dodaj</button>
+      <button class="add-btn btn-primary" @click="addToFridge" :disabled="!selectedIngredient">Dodaj</button>
     </div>
   </div>
 </template>
@@ -38,10 +38,8 @@ const fridgeIngredients = ref([]);
 const availableIngredients = ref([]);
 const selectedIngredient = ref('');
 
-// Zbiór ID składników w lodówce
 const fridgeIngredientsIds = computed(() => new Set(fridgeIngredients.value.map(i => i.id)));
 
-// Filtrowane składniki do wyboru (te, których nie ma w lodówce)
 const filteredAvailableIngredients = computed(() =>
   availableIngredients.value.filter(ingredient => !fridgeIngredientsIds.value.has(ingredient.id))
 );
@@ -99,33 +97,28 @@ onMounted(async () => {
 
 <style scoped>
 .fridge-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0 1rem;
+  margin: var(--space-xl) auto;
 }
 
 h2, h3 {
-  color: #2c3e50;
-  margin-bottom: 1rem;
+  color: var(--secondary-color);
+  margin-bottom: var(--space-md);
 }
 
 .fridge-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 2rem 0;
+  margin: 0 0 var(--space-xl) 0;
 }
 
 .fridge-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f5f7fa;
-  border-radius: 6px;
-  padding: 10px 15px;
-  margin-bottom: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: background-color 0.2s ease;
+  background-color: var(--bg-light);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-xs);
+  transition: background-color var(--transition-normal);
 }
 
 .fridge-item:hover {
@@ -133,9 +126,7 @@ h2, h3 {
 }
 
 .remove-btn {
-  background-color: #e74c3c;
   border: none;
-  color: white;
   font-weight: bold;
   font-size: 1.2rem;
   width: 28px;
@@ -146,57 +137,32 @@ h2, h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.2s ease;
-}
-
-.remove-btn:hover {
-  background-color: #c0392b;
 }
 
 .empty-msg {
   font-style: italic;
-  color: #777;
+  color: var(--text-lighter);
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-xl);
 }
 
 .add-ingredient {
   display: flex;
-  gap: 10px;
+  gap: var(--space-sm);
   align-items: center;
 }
 
 .ingredient-select {
   flex-grow: 1;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1.5px solid #ccc;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: border-color var(--transition-normal);
 }
 
 .ingredient-select:focus {
-  border-color: #42b983;
-  outline: none;
-}
-
-.add-btn {
-  background-color: #42b983;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  border-color: var(--primary-color);
 }
 
 .add-btn:disabled {
-  background-color: #a5d6a7;
+  background-color: var(--primary-light);
   cursor: not-allowed;
-}
-
-.add-btn:not(:disabled):hover {
-  background-color: #369b6f;
 }
 </style>

@@ -36,12 +36,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/00-init.sql:ro
-      - ./backend/db/seed_users.sql:/docker-entrypoint-initdb.d/01-seed_users.sql:ro
-      - ./backend/db/seed_ingredients.sql:/docker-entrypoint-initdb.d/02-seed_ingredients.sql:ro
-      - ./backend/db/seed_meals.sql:/docker-entrypoint-initdb.d/03-seed_meals.sql:ro
-      - ./backend/db/seed_fridge_ingredients.sql:/docker-entrypoint-initdb.d/04-seed_fridge_ingredients.sql:ro
-      - ./backend/db/seed_meal_ingredients.sql:/docker-entrypoint-initdb.d/05-seed_meal_ingredients.sql:ro
+      - ./backend/db:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata:

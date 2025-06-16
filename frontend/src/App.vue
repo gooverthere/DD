@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-
+import './assets/styles.css'
 import { useRouter } from 'vue-router';
 const router = useRouter();
 

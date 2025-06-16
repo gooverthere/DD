@@ -1,8 +1,8 @@
 <template>
-  <div class="available-meals">
+  <div class="available-meals container">
     <h2>Możliwe do przygotowania posiłki</h2>
     <ul>
-      <li v-for="meal in meals" :key="meal.id" class="meal-card">
+      <li v-for="meal in meals" :key="meal.id" class="meal-card card">
         <div class="meal-header">
           <strong class="meal-name">{{ meal.name }}</strong>
           <span class="meal-calories">{{ meal.calories }} kcal</span>
@@ -43,16 +43,13 @@ onMounted(() => {
 
 <style scoped>
 .available-meals {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: var(--space-xl) auto;
 }
 
 h2 {
   text-align: center;
-  color: #333;
-  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+  margin-bottom: var(--space-lg);
   font-weight: 700;
   font-size: 1.8rem;
 }
@@ -64,36 +61,27 @@ ul {
 }
 
 .meal-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.2rem;
-  transition: transform 0.2s ease;
-}
-
-.meal-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .meal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.6rem;
+  margin-bottom: var(--space-sm);
 }
 
 .meal-name {
   font-size: 1.3rem;
-  color: #2c3e50;
+  color: var(--secondary-color);
 }
 
 .meal-calories {
-  background-color: #42b983;
+  background-color: var(--primary-color);
   color: white;
   font-weight: 600;
-  padding: 3px 10px;
+  padding: var(--space-xs) var(--space-sm);
   border-radius: 15px;
   font-size: 0.9rem;
   user-select: none;
@@ -101,20 +89,20 @@ ul {
 
 .meal-description {
   font-style: italic;
-  color: #555;
-  margin-bottom: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: var(--space-sm);
 }
 
 .ingredients {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-xs);
 }
 
 .ingredient-tag {
   background-color: #e0f2f1;
   color: #00796b;
-  padding: 4px 10px;
+  padding: var(--space-xs) var(--space-sm);
   border-radius: 12px;
   font-size: 0.85rem;
   user-select: none;
@@ -122,8 +110,8 @@ ul {
 
 .empty-msg {
   text-align: center;
-  color: #999;
+  color: var(--text-lightest);
   font-style: italic;
-  margin-top: 2rem;
+  margin-top: var(--space-xl);
 }
 </style>

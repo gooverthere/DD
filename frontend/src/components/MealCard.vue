@@ -1,5 +1,5 @@
 <template>
-  <div class="meal-card">
+  <div class="meal-card card">
     <h3 class="meal-name">{{ meal.name }}</h3>
     <p class="meal-calories">{{ meal.calories ?? 'brak kcal' }} kcal</p>
     <p class="meal-description" v-if="meal.description">{{ meal.description }}</p>
@@ -24,47 +24,40 @@ defineProps({
 
 <style scoped>
 .meal-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
 }
 
 .meal-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .meal-name {
   font-size: 1.3rem;
-  margin: 0 0 0.25rem;
-  color: #2c3e50;
+  margin: 0 0 var(--space-xs);
+  color: var(--secondary-color);
   font-weight: 700;
 }
 
 .meal-calories {
   font-weight: 600;
-  color: #27ae60;
-  margin-bottom: 0.75rem;
+  color: var(--success-color);
+  margin-bottom: var(--space-sm);
 }
 
 .meal-description {
   font-style: italic;
-  color: #555;
-  margin-bottom: 1rem;
+  color: var(--text-light);
+  margin-bottom: var(--space-md);
 }
 
 .meal-ingredients {
   font-size: 0.95rem;
-  color: #444;
+  color: var(--text-light);
   line-height: 1.3;
 }
 
 .meal-ingredients strong {
-  color: #2c3e50;
+  color: var(--secondary-color);
 }
 </style>

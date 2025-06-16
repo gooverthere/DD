@@ -1,29 +1,31 @@
 <template>
-  <div class="auth-container">
+  <div class="auth-container container card">
     <h2>{{ isRegister ? 'Rejestracja' : 'Logowanie' }}</h2>
     <form @submit.prevent="handleSubmit">
-      <div>
-        <label>Username</label>
-        <input v-model="username" required />
+      <div class="form-group">
+        <label class="label">Username</label>
+        <input v-model="username" class="input" required />
       </div>
-      <div>
-        <label>Password</label>
-        <input type="password" v-model="password" required />
-      </div>
-
-      <div v-if="isRegister">
-        <label>Confirm Password</label>
-        <input type="password" v-model="confirmPassword" required />
+      <div class="form-group">
+        <label class="label">Password</label>
+        <input type="password" v-model="password" class="input" required />
       </div>
 
-      <button type="submit">{{ isRegister ? 'Zarejestruj się' : 'Zaloguj się' }}</button>
+      <div v-if="isRegister" class="form-group">
+        <label class="label">Confirm Password</label>
+        <input type="password" v-model="confirmPassword" class="input" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        {{ isRegister ? 'Zarejestruj się' : 'Zaloguj się' }}
+      </button>
     </form>
 
-    <p @click="toggleMode" style="cursor:pointer; color:blue; margin-top: 10px;">
+    <p @click="toggleMode" class="toggle-mode">
       {{ isRegister ? 'Masz już konto? Zaloguj się' : 'Nie masz konta? Zarejestruj się' }}
     </p>
 
-    <p v-if="errorMsg" style="color:red;">{{ errorMsg }}</p>
+    <p v-if="errorMsg" class="message error">{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -67,7 +69,7 @@ async function handleSubmit() {
         return;
       }
       alert('Rejestracja zakończona sukcesem! Możesz się teraz zalogować.');
-      toggleMode(); // przełącz na logowanie po udanej rejestracji
+      toggleMode();
     } catch (e) {
       errorMsg.value = 'Błąd sieci podczas rejestracji.';
     }
@@ -86,11 +88,8 @@ async function handleSubmit() {
         return;
       }
       const data = await res.json();
-      // Tutaj można zapisać token itd.
       localStorage.setItem('token', data.token);
-
       router.push('/available-meals');
-
     } catch (e) {
       errorMsg.value = 'Błąd sieci';
     }
@@ -101,32 +100,41 @@ async function handleSubmit() {
 <style scoped>
 .auth-container {
   max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  margin: var(--space-xl) auto;
+  padding: var(--space-lg);
 }
-.auth-container form div {
-  margin-bottom: 12px;
+
+h2 {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  color: var(--secondary-color);
 }
-.auth-container label {
-  display: block;
-  margin-bottom: 4px;
+
+.form-group {
+  margin-bottom: var(--space-md);
 }
-.auth-container input {
+
+.btn {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  padding: var(--space-md);
+  margin-top: var(--space-md);
 }
-.auth-container button {
-  padding: 10px 15px;
-  background-color: #42b983;
-  border: none;
-  color: white;
+
+.toggle-mode {
+  color: var(--primary-color);
+  text-align: center;
+  margin-top: var(--space-md);
   cursor: pointer;
-  border-radius: 4px;
+  transition: color var(--transition-normal);
 }
-.auth-container button:hover {
-  background-color: #369b6f;
+
+.toggle-mode:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+.message {
+  margin-top: var(--space-md);
+  text-align: center;
 }
 </style>
