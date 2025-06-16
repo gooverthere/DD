@@ -54,8 +54,24 @@ async function handleSubmit() {
       errorMsg.value = 'Hasła muszą być takie same.';
       return;
     }
-    // Rejestracja - tu dodaj endpoint rejestracji, teraz placeholder
-    alert(`Rejestracja użytkownika ${username.value} nie jest jeszcze zaimplementowana.`);
+    // Rejestracja
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username.value, password: password.value }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        errorMsg.value = data.message || 'Błąd rejestracji';
+        return;
+      }
+      alert('Rejestracja zakończona sukcesem! Możesz się teraz zalogować.');
+      toggleMode(); // przełącz na logowanie po udanej rejestracji
+    } catch (e) {
+      errorMsg.value = 'Błąd sieci podczas rejestracji.';
+    }
+    return;
   } else {
     // Logowanie
     try {
@@ -70,11 +86,10 @@ async function handleSubmit() {
         return;
       }
       const data = await res.json();
-      alert('Zalogowano pomyślnie! (dalej rozwijamy aplikację)');
       // Tutaj można zapisać token itd.
       localStorage.setItem('token', data.token);
 
-      router.push('/dashboard');
+      router.push('/available-meals');
 
     } catch (e) {
       errorMsg.value = 'Błąd sieci';

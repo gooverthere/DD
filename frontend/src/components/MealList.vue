@@ -30,6 +30,18 @@
       </div>
 
       <div>
+        <label for="calories">Kalorie:</label>
+        <input
+          id="calories"
+          type="number"
+          v-model.number="calories"
+          min="0"
+          required
+        />
+      </div>
+
+
+      <div>
         <label>Składniki:</label>
         <div v-if="ingredients.length === 0">Ładowanie składników...</div>
         <div v-else>
@@ -100,6 +112,7 @@ async function submitForm() {
   const payload = {
     name: name.value.trim(),
     description: description.value.trim(),
+    calories: calories.value,
     ingredients: selectedIngredients.value,
   };
 
@@ -119,6 +132,7 @@ async function submitForm() {
     messageColor.value = 'green';
     name.value = '';
     description.value = '';
+    calories.value = null;
     selectedIngredients.value = [];
     await loadMeals(); // odśwież listę po dodaniu
   } catch (e) {

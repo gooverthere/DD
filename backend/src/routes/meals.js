@@ -32,24 +32,22 @@ router.get('/list', authenticateToken, async (req, res) => {
 
 // POST /add - dodanie nowego posiłku z składnikami
 router.post('/add', authenticateToken, async (req, res) => {
-  const { name, description, ingredients } = req.body; 
+  const { name, description, calories, ingredients } = req.body; 
   // ingredients - tablica ID składników, np. [1, 4, 7]
 
   if (!name || !Array.isArray(ingredients)) {
     return res.status(400).json({ message: 'Brak wymaganych danych: name i ingredients' });
   }
 
-  const client = await pool.connect();
-
   try {
-    await client.query('BEGIN');
+    await pool.query('BEGIN');
 
     const insertMealText = `
-      INSERT INTO meals (name, description, created_at)
-      VALUES ($1, $2, NOW())
+      INSERT INTO meals (name, description, calories, created_at)
+      VALUES ($1, $2, $3, NOW())
       RETURNING id
     `;
-    const mealResult = await client.query(insertMealText, [name, description || null]);
+    const mealResult = await pool.query(insertMealText, [name, description || null, calories || null]);
     const mealId = mealResult.rows[0].id;
 
     const insertIngredientsText = `
@@ -58,18 +56,17 @@ router.post('/add', authenticateToken, async (req, res) => {
     `;
 
     for (const ingredientId of ingredients) {
-      await client.query(insertIngredientsText, [mealId, ingredientId]);
-    }
+      await pool.query(insertIngredientsText, [mealId, ingredientId]);
+    }w
 
-    await client.query('COMMIT');
+    await pool.query('COMMIT');
 
     res.status(201).json({ message: 'Posiłek dodany', mealId });
   } catch (err) {
-    await client.query('ROLLBACK');
+    await pool.query('ROLLBACK');
     console.error(err);
     res.status(500).json({ message: 'Błąd serwera podczas dodawania posiłku' });
   } finally {
-    client.release();
   }
 });
 
