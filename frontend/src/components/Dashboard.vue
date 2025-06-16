@@ -4,11 +4,18 @@
     <p>Witaj! Tu będzie lista Twoich planów posiłków.</p>
     <button @click="logout">Wyloguj się</button>
     <MealList />
+    <Fridge />
+        <AvailableMeals />
+
   </div>
 </template>
 
 <script setup>
 import MealList from './MealList.vue';
+import Fridge from './Fridge.vue';
+import AvailableMeals from './AvailableMeals.vue';
+
+
 import { useRouter } from 'vue-router';
 const router = useRouter();
 

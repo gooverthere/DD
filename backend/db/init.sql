@@ -20,6 +20,14 @@ CREATE TABLE IF NOT EXISTS meal_ingredients (
   PRIMARY KEY (meal_id, ingredient_id)
 );
 
+
+-- Tabela lodówki 
+CREATE TABLE IF NOT EXISTS fridge_ingredients (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  ingredient_id INT REFERENCES ingredients(id) ON DELETE CASCADE
+);
+
 -- Przykładowe posiłki
 INSERT INTO meals (name, description, calories) VALUES
 ('Sałatka grecka', 'Sałatka z pomidorów, ogórków, oliwek i sera feta.', 250),
@@ -55,3 +63,11 @@ INSERT INTO meal_ingredients (meal_id, ingredient_id) VALUES
 (3, 6), -- Płatki owsiane
 (3, 7), -- Miód
 (3, 8); -- Owoce
+
+-- Przykładowe dane: użytkownik "admin" ma kilka składników w lodówce
+INSERT INTO fridge_ingredients (username, ingredient_id) VALUES
+('admin', 1),
+('admin', 2),
+('admin', 3),
+('admin', 4),
+('admin', 5);
