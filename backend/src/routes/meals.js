@@ -57,7 +57,7 @@ router.post('/add', authenticateToken, async (req, res) => {
 
     for (const ingredientId of ingredients) {
       await pool.query(insertIngredientsText, [mealId, ingredientId]);
-    }w
+    }
 
     await pool.query('COMMIT');
 

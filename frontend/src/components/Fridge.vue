@@ -1,29 +1,32 @@
 <template>
-  <div>
+  <div class="fridge-container">
     <h2>Lodówka</h2>
 
     <h3>Co masz w lodówce?</h3>
-    <ul>
-      <li v-for="ingredient in fridgeIngredients" :key="ingredient.id">
-        {{ ingredient.name }}
-        <button @click="removeFromFridge(ingredient.id)">Usuń</button>
+    <ul class="fridge-list">
+      <li v-for="ingredient in fridgeIngredients" :key="ingredient.id" class="fridge-item">
+        <span>{{ ingredient.name }}</span>
+        <button class="remove-btn" @click="removeFromFridge(ingredient.id)" aria-label="Usuń składnik">
+          &times;
+        </button>
       </li>
-      <li v-if="fridgeIngredients.length === 0">Lodówka jest pusta.</li>
+      <li v-if="fridgeIngredients.length === 0" class="empty-msg">Lodówka jest pusta.</li>
     </ul>
 
     <h3>Dodaj składniki do lodówki</h3>
-    <select v-model="selectedIngredient">
-      <option disabled value="">Wybierz składnik</option>
-      <option
-        v-for="ingredient in availableIngredients"
-        :key="ingredient.id"
-        :value="ingredient.id"
-        :disabled="fridgeIngredientsIds.has(ingredient.id)"
-      >
-        {{ ingredient.name }}
-      </option>
-    </select>
-    <button @click="addToFridge" :disabled="!selectedIngredient">Dodaj</button>
+    <div class="add-ingredient">
+      <select v-model="selectedIngredient" class="ingredient-select">
+        <option disabled value="">Wybierz składnik</option>
+        <option
+          v-for="ingredient in filteredAvailableIngredients"
+          :key="ingredient.id"
+          :value="ingredient.id"
+        >
+          {{ ingredient.name }}
+        </option>
+      </select>
+      <button class="add-btn" @click="addToFridge" :disabled="!selectedIngredient">Dodaj</button>
+    </div>
   </div>
 </template>
 
@@ -35,8 +38,13 @@ const fridgeIngredients = ref([]);
 const availableIngredients = ref([]);
 const selectedIngredient = ref('');
 
-// Ustaw zbiór ID składników w lodówce dla szybkiej walidacji
+// Zbiór ID składników w lodówce
 const fridgeIngredientsIds = computed(() => new Set(fridgeIngredients.value.map(i => i.id)));
+
+// Filtrowane składniki do wyboru (te, których nie ma w lodówce)
+const filteredAvailableIngredients = computed(() =>
+  availableIngredients.value.filter(ingredient => !fridgeIngredientsIds.value.has(ingredient.id))
+);
 
 async function fetchFridge() {
   const res = await authFetch(`${import.meta.env.VITE_API_URL}/api/fridge/current`);
@@ -88,3 +96,107 @@ onMounted(async () => {
   await fetchAllIngredients();
 });
 </script>
+
+<style scoped>
+.fridge-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0 1rem;
+}
+
+h2, h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.fridge-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.fridge-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f7fa;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease;
+}
+
+.fridge-item:hover {
+  background-color: #e1e8f0;
+}
+
+.remove-btn {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  line-height: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
+
+.empty-msg {
+  font-style: italic;
+  color: #777;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.add-ingredient {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ingredient-select {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.ingredient-select:focus {
+  border-color: #42b983;
+  outline: none;
+}
+
+.add-btn {
+  background-color: #42b983;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-btn:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.add-btn:not(:disabled):hover {
+  background-color: #369b6f;
+}
+</style>
