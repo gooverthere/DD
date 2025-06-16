@@ -2,13 +2,14 @@
   "name": "meal-planner-frontend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "./node_modules/.bin/vite",
+    "build": "./node_modules/.bin/vite build",
     "serve": "vite preview"
   },
   "dependencies": {
     "axios": "^1.4.0",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "dotenv": "^16.5.0"
   },
   "devDependencies": {
     "vite": "^4.4.9",

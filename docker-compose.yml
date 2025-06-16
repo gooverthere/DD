@@ -9,6 +9,7 @@ services:
       - ./backend/.env
     volumes:
       - ./backend:/app
+      - /app/node_modules
     depends_on:
       - db
 
@@ -20,6 +21,7 @@ services:
       - ./frontend/.env
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend
 
