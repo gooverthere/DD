@@ -4,15 +4,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pool = require('../db');
 
-// const users = [
-//   // Hasło zahashowane bcryptem (przykład hasła 'admin')
-//   { username: 'admin', passwordHash: "$2a$10$VtcscreZEM9EzlG1Zs6treMAUhZGq/cRKmgDC.ctDJnkBoEZ/boPW" },
-// ];
 
-// Sekret JWT z .env
 const JWT_SECRET = process.env.JWT_SECRET || 'defaultsecret';
 
-// Rejestracja (prosty przykład, dodaj do users tablicy)
 router.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
@@ -85,7 +79,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
-    req.user = user; // username w req.user.username
+    req.user = user;
     next();
   });
 }
