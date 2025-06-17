@@ -57,4 +57,4 @@ docker-compose.yml
 
 ## Testy
 
-   W celu uruchomienia testów frontend należy wejść w kontener i wykonać komendę `npx vitest`
+   W celu uruchomienia testów frontend należy wejść w kontener i wykonać komendę `docker-compose run frontend npx vitest`
