@@ -34,3 +34,12 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Tabela kalendarza posiłków
+CREATE TABLE IF NOT EXISTS calendar_meals (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) NOT NULL,
+  meal_id INTEGER REFERENCES meals(id) ON DELETE CASCADE,
+  date DATE NOT NULL,
+  UNIQUE (username, meal_id, date)
+);

@@ -3,12 +3,14 @@ import MealList from '../components/MealList.vue';
 import Fridge from '../components/Fridge.vue';
 import AvailableMeals from '../components/AvailableMeals.vue';
 import Login from '../components/Login.vue';
+import Calendar from '../components/Calendar.vue';
 
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: Login },
   { path: '/meals', component: MealList },
   { path: '/fridge', component: Fridge },
+  { path: '/calendar', component: Calendar },
   { path: '/available-meals', component: AvailableMeals },
   { path: '/:pathMatch(.*)*', redirect: '/login' }, // przekierowanie na login dla innych ścieżek
 ];

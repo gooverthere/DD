@@ -6,6 +6,7 @@
           <li><router-link to="/available-meals">Dostępne posiłki</router-link></li>
           <li><router-link to="/fridge">Lodówka</router-link></li>
           <li><router-link to="/meals">Posiłki</router-link></li>
+          <li><router-link to="/calendar">Kalendarz</router-link></li>
           <li><button class="logout-btn" @click="logout">Wyloguj się</button></li>
         </ul>
       </nav>
